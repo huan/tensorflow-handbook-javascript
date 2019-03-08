@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "docker": "scripts/docker.sh",
-    "trans": "node -r ts-node/register bin/translation.ts",
+    "train": "node -r ts-node/register src/chitchat.ts",
+    "download": "scripts/download.sh",
     "test": "echo test"
   },
   "repository": {
@@ -34,7 +35,6 @@
   "dependencies": {
     "@tensorflow/tfjs": "^0.15.3",
     "@tensorflow/tfjs-node": "^0.3.1",
-    "@tensorflow/tfjs-node-gpu": "^0.3.1",
     "invert-kv": "^2.0.0",
     "zip-array": "^1.0.1"
   }
