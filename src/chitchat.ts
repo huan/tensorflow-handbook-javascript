@@ -405,13 +405,15 @@ async function main () {
 
   // tfjs.converters.save_keras_model(model, FLAGS.artifacts_dir)
 
-  // Next: inference mode (sampling).
-  // Here's the drill:
-  // 1) encode input and retrieve initial decoder state
-  // 2) run one step of decoder with this initial state
-  // and a "start of sequence" token as target.
-  // Output will be the next target token
-  // 3) Repeat with the current target token and current states
+  /**
+   * Next: inference mode (sampling).
+   * Here's the drill:
+   * 1) encode input and retrieve initial decoder state
+   * 2) run one step of decoder with this initial state
+   * and a "start of sequence" token as target.
+   * Output will be the next target token
+   * 3) Repeat with the current target token and current states
+   */
 
   // Define sampling models
   const encoder_model = tf.model({
