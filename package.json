@@ -35,6 +35,8 @@
   "dependencies": {
     "@tensorflow/tfjs": "^0.15.3",
     "@tensorflow/tfjs-node": "^0.3.1",
+    "@tensorflow/tfjs-node-gpu": "^0.3.1",
+    "@types/mkdirp": "^0.5.2",
     "invert-kv": "^2.0.0",
     "zip-array": "^1.0.1"
   }
