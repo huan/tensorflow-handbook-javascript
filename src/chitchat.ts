@@ -170,12 +170,12 @@ function seq2seqModel (
   const model = tf.sequential()
   model.add(tf.layers.embedding({
     inputDim: num_encoder_tokens + 1,
-    outputDim: 64,
+    outputDim: FLAGS.latent_dim,
     name: 'embedding',
     // maskZero: true,
   }))
   model.add(tf.layers.lstm({
-    units: 64,
+    units: FLAGS.latent_dim,
     name: 'encoder',
     // goBackwards: true,
   }))
@@ -183,7 +183,7 @@ function seq2seqModel (
     n: max_decoder_seq_length,
   }))
   model.add(tf.layers.lstm({
-    units: 64,
+    units: FLAGS.latent_dim,
     returnSequences: true,
     name: 'decoder',
   }))
