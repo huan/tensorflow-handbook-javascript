@@ -118,15 +118,15 @@ async function main () {
     console.log('ys', input[1].shape)
   })
 
-  console.log('1')
   await seq2seqModel.fitDataset(
-    seq2seqDataset.batch(FLAGS.batch_size),
+    seq2seqDataset
+      .batch(FLAGS.batch_size)
+      .prefetch(256),
     {
       epochs: FLAGS.epochs,
       // validationSplit: 0.2,
     },
   )
-  console.log(2)
 
   // FIXME: Layer decoderLstm was passed non-serializable keyword arguments: [object Object].
   // FIXME: They will not be included in the serialized model (and thus will be missing at deserialization time).
