@@ -31,7 +31,7 @@ export function getCsvDataset (
   csvDataset = csvDataset.map(value => {
     return {
       input: value.input,
-      output: value.output,
+      output: START_OF_SEQ + value.output + END_OF_SEQ,
     }
   })
 
@@ -46,19 +46,20 @@ async function getSeq2seqDataset (
 ) {
   const seq2seqDataset = dataset
   .map(value => {
-    const encoderInput = vectorizeInput(value.input, inputVoc)
+    const input = vectorizeInput(value.input, inputVoc)
 
-    const output = START_OF_SEQ + value.output + END_OF_SEQ
     const {
       decoderInput,
       decoderTarget,
-    } = vectorizeForDecoder(output, outputVoc)
+    } = vectorizeForDecoder(value.output, outputVoc)
 
-    return {
-      encoderInput,
-      decoderInput,
+    return [
+      {
+        seq2seqInputs: input,
+        seq2seqDecoderInputs: decoderInput,
+      },
       decoderTarget,
-    }
+    ]
   })
 
   return seq2seqDataset
@@ -86,9 +87,8 @@ async function getSeq2seqDataset (
     text: string,
     voc: Vocabulary,
   ) {
-    const inputBuf = tf.buffer<tf.Rank.R2>([
+    const inputBuf = tf.buffer<tf.Rank.R1>([
       voc.maxSeqLength,
-      voc.size,
     ])
     const targetBuf = tf.buffer<tf.Rank.R2>([
       voc.maxSeqLength,
@@ -98,7 +98,7 @@ async function getSeq2seqDataset (
     const tokenList = [...voc.tokenizer.tokenize(text)]
     for (const [t, token] of tokenList.entries()) {
       const indice = voc.indice(token)
-      inputBuf.set(1, t, indice)
+      inputBuf.set(indice, t)
 
       // shift left for target: not including START_OF_SEQ
       if (t > 0) {

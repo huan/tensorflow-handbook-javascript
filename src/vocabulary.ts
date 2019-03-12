@@ -25,8 +25,10 @@ export class Vocabulary {
     }
     for (const token of this.tokenizer.tokenize(text)) {
       if (!this.tokenIndice.has(token)) {
+
         this.tokenIndice.set(token, this.size)
         this.indiceToken.set(this.size, token)
+
         this.size++
       }
     }
@@ -42,14 +44,14 @@ export class Vocabulary {
     if (this.indiceToken.has(indice)) {
       return this.indiceToken.get(indice) as string
     }
-    throw new Error('token not found for indice: ' + indice)
+    throw new Error(`token not found for indice: ${indice}`)
   }
 
   public indice (token: string): number {
     if (this.tokenIndice.has(token)) {
       return this.tokenIndice.get(token) as number
     }
-    throw new Error('indice not found for token: ' + token)
+    throw new Error(`indice not found for token: "${token}"`)
   }
 
   public toJSON (): string {

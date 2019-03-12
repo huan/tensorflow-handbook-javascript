@@ -20,8 +20,9 @@ import {
   END_OF_SEQ,
 }                      from './config'
 
+import { createModel }  from './model/'
+
 import { getDataset }   from './data'
-import { createModel }     from './model'
 
 import { Vocabulary } from './vocabulary'
 
@@ -86,7 +87,7 @@ async function main () {
   )
 
   const {
-    model,
+    seq2seqModel,
     encoderModel,
     decoderModel,
   } = createModel (
@@ -95,28 +96,43 @@ async function main () {
     FLAGS.latent_dim,
   )
 
-  model.summary()
+  seq2seqModel.summary()
 
   // Run training.
-  model.compile({
+  seq2seqModel.compile({
     optimizer: 'rmsprop',
     loss: 'categoricalCrossentropy',
     // loss: 'sparseCategoricalCrossentropy',
   })
 
-  await model.fitDataset(
+  await seq2seqDataset
+  .batch(FLAGS.batch_size)
+  .take(1)
+  .forEachAsync((input: any) => {
+    // console.log(input[0])
+    console.log('seq2seq dataset sample:')
+    console.log('seq2seqInputs', input[0].seq2seqInputs.shape)
+    console.log('seq2seqDecoderInputs', input[0].seq2seqDecoderInputs.shape)
+
+    // console.log(input[1])
+    console.log('ys', input[1].shape)
+  })
+
+  console.log('1')
+  await seq2seqModel.fitDataset(
     seq2seqDataset.batch(FLAGS.batch_size),
     {
       epochs: FLAGS.epochs,
       // validationSplit: 0.2,
     },
   )
+  console.log(2)
 
   // FIXME: Layer decoderLstm was passed non-serializable keyword arguments: [object Object].
   // FIXME: They will not be included in the serialized model (and thus will be missing at deserialization time).
 
   // Huan: be aware that the Node need a `file://` prefix to local filename
-  await model.save('file://' + FLAGS.artifacts_dir)
+  await seq2seqModel.save('file://' + FLAGS.artifacts_dir)
 
   const csvList = await dataset.take(FLAGS.num_test_sentences).toArray()
 

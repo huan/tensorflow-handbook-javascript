@@ -6,14 +6,14 @@ import { Vocabulary } from './vocabulary'
 const META_DATA_JSON_FILE_NAME = 'metadata.json'
 
 export async function saveMetadata (
-  srcVoc: Vocabulary,
-  dstVoc: Vocabulary,
+  inputVoc: Vocabulary,
+  outputVoc: Vocabulary,
   workDir: string,
 ) {
-  console.log('Number of unique input tokens:', srcVoc.size)
-  console.log('Number of unique output tokens:', dstVoc.size)
-  console.log('Max sequence length for inputs:', srcVoc.maxSeqLength)
-  console.log('Max sequence length for outputs:', dstVoc.maxSeqLength)
+  console.log('Number of unique input tokens:', inputVoc.size)
+  console.log('Number of unique output tokens:', outputVoc.size)
+  console.log('Max sequence length for inputs:', inputVoc.maxSeqLength)
+  console.log('Max sequence length for outputs:', outputVoc.maxSeqLength)
 
   // Save the token indices to file.
   const metadataJsonPath = path.join(
@@ -22,8 +22,8 @@ export async function saveMetadata (
   )
 
   const metadata = {
-    'srcVoc': srcVoc,
-    'dstVoc': dstVoc,
+    'inputVoc': inputVoc,
+    'outputVoc': outputVoc,
   }
 
   fs.writeFileSync(metadataJsonPath, JSON.stringify(metadata))
