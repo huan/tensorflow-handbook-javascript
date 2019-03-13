@@ -63,56 +63,56 @@ async function getSeq2seqDataset (
   })
 
   return seq2seqDataset
+}
 
-  function vectorizeInput (
-    text: string,
-    voc: Vocabulary,
-  ): tf.Tensor<tf.Rank.R1> {
-    const tokenList = [...voc.tokenizer.tokenize(text)]
-                      .map(token => voc.indice(token))
+export function vectorizeInput (
+  text: string,
+  voc: Vocabulary,
+): tf.Tensor<tf.Rank.R1> {
+  const tokenList = [...voc.tokenizer.tokenize(text)]
+                    .map(token => voc.indice(token))
 
-    const tokenLength = tokenList.length
-    const needFill = voc.maxSeqLength > tokenLength
+  const tokenLength = tokenList.length
+  const needFill = voc.maxSeqLength > tokenLength
 
-    // if longer than max length, cut it
-    // if shorter than max length, expand it(and then fill 0)
-    tokenList.length = voc.maxSeqLength
-    if (needFill) {
-      tokenList.fill(0, tokenLength)
+  // if longer than max length, cut it
+  // if shorter than max length, expand it(and then fill 0)
+  tokenList.length = voc.maxSeqLength
+  if (needFill) {
+    tokenList.fill(0, tokenLength)
+  }
+  return tf.tensor(tokenList)
+}
+
+function vectorizeForDecoder (
+  text: string,
+  voc: Vocabulary,
+) {
+  const inputBuf = tf.buffer<tf.Rank.R1>([
+    voc.maxSeqLength,
+  ])
+  const targetBuf = tf.buffer<tf.Rank.R2>([
+    voc.maxSeqLength,
+    voc.size,
+  ])
+
+  const tokenList = [...voc.tokenizer.tokenize(text)]
+  for (const [t, token] of tokenList.entries()) {
+    const indice = voc.indice(token)
+    inputBuf.set(indice, t)
+
+    // shift left for target: not including START_OF_SEQ
+    if (t > 0) {
+      targetBuf.set(1, t - 1, indice)
     }
-    return tf.tensor(tokenList)
   }
 
-  function vectorizeForDecoder (
-    text: string,
-    voc: Vocabulary,
-  ) {
-    const inputBuf = tf.buffer<tf.Rank.R1>([
-      voc.maxSeqLength,
-    ])
-    const targetBuf = tf.buffer<tf.Rank.R2>([
-      voc.maxSeqLength,
-      voc.size,
-    ])
+  const decoderInput = inputBuf.toTensor()
+  const decoderTarget = targetBuf.toTensor()
 
-    const tokenList = [...voc.tokenizer.tokenize(text)]
-    for (const [t, token] of tokenList.entries()) {
-      const indice = voc.indice(token)
-      inputBuf.set(indice, t)
-
-      // shift left for target: not including START_OF_SEQ
-      if (t > 0) {
-        targetBuf.set(1, t - 1, indice)
-      }
-    }
-
-    const decoderInput = inputBuf.toTensor()
-    const decoderTarget = targetBuf.toTensor()
-
-    return {
-      decoderInput,
-      decoderTarget,
-    }
+  return {
+    decoderInput,
+    decoderTarget,
   }
 }
 

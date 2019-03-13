@@ -22,7 +22,10 @@ import {
 
 import { createModel }  from './model/'
 
-import { getDataset }   from './data'
+import {
+  getDataset,
+  vectorizeInput,
+}                     from './data'
 
 import { Vocabulary } from './vocabulary'
 
@@ -35,12 +38,14 @@ async function seq2seq (
   inputVoc: Vocabulary,
   outputVoc: Vocabulary,
 ): Promise<string> {
-  const inputSeq = inputVoc.sequenize(input)
-  const inputTensor = tf.tensor(inputSeq)
-  let state = encoderModel.predict(inputTensor) as tf.Tensor<tf.Rank.R2>
+  const inputSeq = vectorizeInput(input, inputVoc)
 
-  let decoderInput = tf.buffer<tf.Rank.R3>([1, 1, outputVoc.size])
-  decoderInput.set(1, 0, 0, outputVoc.indice(START_OF_SEQ))
+  const batchedInputSeq = inputSeq.expandDims(0)
+  let state = encoderModel.predict(batchedInputSeq) as tf.Tensor<tf.Rank.R2>
+
+  // let state = encoderModel.predictOnBatch(inputSeq) as tf.Tensor<tf.Rank.R2>
+
+  let decoderInput = outputVoc.indice(START_OF_SEQ)
 
   let decodedTensor: tf.Tensor<tf.Rank.R3>
   let decodedToken: string
@@ -48,27 +53,32 @@ async function seq2seq (
 
   do {
     [decodedTensor, state] = decoderModel.predict([
-      decoderInput.toTensor(),
+      tf.tensor([decoderInput]),
       state,
     ]) as [
       tf.Tensor<tf.Rank.R3>,
       tf.Tensor<tf.Rank.R2>,
     ]
 
-    const decodedIndice = await decodedTensor
+    let decodedIndice = await decodedTensor
                                 .squeeze()
                                 .argMax()
                                 .array() as number
 
-    decodedToken = outputVoc.token(decodedIndice)
+    if (decodedIndice === 0) {
+      // 0 for padding, should be treated as END
+      decodedToken = END_OF_SEQ
+    } else {
+      decodedToken = outputVoc.token(decodedIndice)
+    }
+
     decodedSentence += decodedToken
 
     // save decoded data for next time step
-    decoderInput = tf.buffer<tf.Rank.R3>([1, 1, outputVoc.size])
-    decoderInput.set(1, 0, 0, decodedIndice)
+    decoderInput = decodedIndice
   } while (
        decodedToken !== END_OF_SEQ
-    || decodedSentence.length < outputVoc.size
+    && decodedSentence.length < outputVoc.size
   )
 
   return decodedSentence
@@ -98,6 +108,8 @@ async function main () {
 
   seq2seqModel.summary()
 
+  console.log('Sample num:', size)
+
   // Run training.
   seq2seqModel.compile({
     optimizer: 'rmsprop',
@@ -115,18 +127,20 @@ async function main () {
     console.log('seq2seqDecoderInputs', input[0].seq2seqDecoderInputs.shape)
 
     // console.log(input[1])
-    console.log('ys', input[1].shape)
+    // console.log('ys', input[1].shape)
   })
 
-  await seq2seqModel.fitDataset(
-    seq2seqDataset
+  if (FLAGS.epochs > 0) {
+    await seq2seqModel.fitDataset(
+      seq2seqDataset
       .batch(FLAGS.batch_size)
-      .prefetch(256),
-    {
-      epochs: FLAGS.epochs,
-      // validationSplit: 0.2,
-    },
-  )
+      .prefetch(FLAGS.batch_size * 2),
+      {
+        epochs: FLAGS.epochs,
+        // validationSplit: 0.2,
+      },
+    )
+  }
 
   // FIXME: Layer decoderLstm was passed non-serializable keyword arguments: [object Object].
   // FIXME: They will not be included in the serialized model (and thus will be missing at deserialization time).
@@ -149,7 +163,6 @@ async function main () {
     )
 
     console.log('-')
-    console.log('Sample num:', size)
     console.log('Input sentence:', input)
     console.log('Target sentence:', output)
     console.log('Decoded sentence:', decodedOutput)
