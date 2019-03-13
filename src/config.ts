@@ -1,8 +1,7 @@
 import * as tf from '@tensorflow/tfjs'
-import '@tensorflow/tfjs-node'
 
-export const START_OF_SEQ = '\t'
-export const END_OF_SEQ = '\n'
+export const START_TOKEN = '\t'
+export const END_TOKEN = '\n'
 
 export {
   tf,

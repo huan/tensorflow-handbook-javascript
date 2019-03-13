@@ -3,8 +3,8 @@ import { tf } from './config'
 import { Vocabulary } from './vocabulary'
 
 import {
-  START_OF_SEQ,
-  END_OF_SEQ,
+  START_TOKEN,
+  END_TOKEN,
 }                 from './config'
 
 type Seq2seqData = {
@@ -31,7 +31,7 @@ export function getCsvDataset (
   csvDataset = csvDataset.map(value => {
     return {
       input: value.input,
-      output: START_OF_SEQ + value.output + END_OF_SEQ,
+      output: START_TOKEN + value.output + END_TOKEN,
     }
   })
 
@@ -53,13 +53,13 @@ async function getSeq2seqDataset (
       decoderTarget,
     } = vectorizeForDecoder(value.output, outputVoc)
 
-    return [
-      {
-        seq2seqInputs: input,
-        seq2seqDecoderInputs: decoderInput,
-      },
-      decoderTarget,
-    ]
+    const xs = {
+      seq2seqInputs: input,
+      seq2seqDecoderInputs: decoderInput,
+    }
+    const ys = decoderTarget
+
+    return [xs, ys] as [typeof xs, typeof ys]
   })
 
   return seq2seqDataset

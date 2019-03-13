@@ -4,6 +4,7 @@ import { createLayers } from './layers'
 import { getSeq2seqModel } from './seq2seq-model'
 import { getEncoderModel } from './encoder-model'
 import { getDecoderModel } from './decoder-model'
+export { seq2seqDecoder } from './seq2seq-decoder'
 
 export function createModel (
   inputVoc: Vocabulary,

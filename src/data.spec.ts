@@ -9,26 +9,26 @@ const FIXTURE_DATASET_CSV_FILE = 'file://tests/fixtures/dataset.csv'
 
 test('getDataset()', async t => {
   const {
-    seq2seqDataset: dataset,
-    inputVoc: srcVoc,
-    outputVoc: dstVoc,
+    seq2seqDataset,
+    inputVoc,
+    outputVoc,
     size,
   } = await getDataset(FIXTURE_DATASET_CSV_FILE)
   // } = await getDataset('file://dist/fra.txt', 10)
 
-  console.log('srcVoc', srcVoc.size)
-  console.log('srcVoc', JSON.stringify([...srcVoc.tokenIndice]))
-  console.log('dstVoc', dstVoc.size)
-  console.log('dstVoc', JSON.stringify([...dstVoc.tokenIndice]))
+  console.log('srcVoc', inputVoc.size)
+  console.log('srcVoc', JSON.stringify([...inputVoc.tokenIndice]))
+  console.log('dstVoc', outputVoc.size)
+  console.log('dstVoc', JSON.stringify([...outputVoc.tokenIndice]))
   console.log('size', size)
 
-  await dataset.forEachAsync(value => {
+  await seq2seqDataset.forEachAsync(([xs, ys]) => {
     console.log('encoderInput')
-    value.encoderInput.print()
+    xs.seq2seqInputs.print()
     console.log('decoderInput')
-    value.decoderInput.print()
+    xs.seq2seqDecoderInputs.print()
     console.log('decoderOutput')
-    value.decoderTarget.print()
+    ys.print()
   })
 
   t.ok('test')
