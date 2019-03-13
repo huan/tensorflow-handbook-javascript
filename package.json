@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
+    "clean": "shx rm -fr dist/",
     "docker": "scripts/docker.sh",
     "train": "node -r ts-node/register bin/train.ts",
     "download": "scripts/download.sh",
@@ -30,6 +31,7 @@
     "@types/argparse": "^1.0.36",
     "@types/blue-tape": "^0.1.32",
     "blue-tape": "^1.0.0",
+    "shx": "^0.3.2",
     "ts-node": "^8.0.2",
     "tslint": "^5.13.1",
     "typescript": "^3.3.3333"
