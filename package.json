@@ -1,6 +1,6 @@
 {
   "name": "javascript-concist-chit-chat",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Concist Chit Chat in JavaScript/TypeScript",
   "main": "index.js",
   "scripts": {
