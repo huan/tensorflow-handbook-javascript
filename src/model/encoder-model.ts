@@ -11,7 +11,7 @@ interface EncoderModelOptions {
 /**
  * Encoder Model
  */
-export function getEncoderModel (options: EncoderModelOptions): tf.Model {
+export function getEncoderModel (options: EncoderModelOptions): tf.LayersModel {
   const {
     encoderEmbeddingLayer,
     encoderRnnLayer,

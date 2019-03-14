@@ -8,8 +8,8 @@ import { vectorizeInput } from '../data'
 
 export async function seq2seqDecoder (
   input: string,
-  encoderModel: tf.Model,
-  decoderModel: tf.Model,
+  encoderModel: tf.LayersModel,
+  decoderModel: tf.LayersModel,
   inputVoc: Vocabulary,
   outputVoc: Vocabulary,
 ): Promise<string> {

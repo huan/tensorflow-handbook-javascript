@@ -17,7 +17,7 @@ interface Seq2seqModelOptions {
  */
 export function getSeq2seqModel(
   options: Seq2seqModelOptions,
-): tf.Model {
+): tf.LayersModel {
   const {
     encoderEmbeddingLayer,
     encoderRnnLayer,

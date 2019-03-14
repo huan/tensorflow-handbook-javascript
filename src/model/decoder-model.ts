@@ -10,7 +10,7 @@ interface DecoderModelOptions {
 /**
  * Decoder Model
  */
-export function getDecoderModel (options: DecoderModelOptions): tf.Model {
+export function getDecoderModel (options: DecoderModelOptions): tf.LayersModel {
   const {
     decoderEmbeddingLayer,
     decoderRnnLayer,
