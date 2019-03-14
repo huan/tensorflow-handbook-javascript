@@ -18,7 +18,7 @@ export function getDecoderModel (options: DecoderModelOptions): tf.LayersModel {
     latentDim,
   } = options
 
-  const decoderInputs = tf.layers.input({
+  const decoderInput = tf.layers.input({
     shape: [1],
     name: 'decoderInputs',
   })
@@ -27,7 +27,7 @@ export function getDecoderModel (options: DecoderModelOptions): tf.LayersModel {
     name: 'decoderState',
   }) as tf.SymbolicTensor
 
-  const decoderEmbedding = decoderEmbeddingLayer.apply(decoderInputs) as tf.SymbolicTensor
+  const decoderEmbedding = decoderEmbeddingLayer.apply(decoderInput) as tf.SymbolicTensor
 
   const [decoderOutputs, decoderStateOutput] = decoderRnnLayer.apply(
     [decoderEmbedding, decoderStateInput],
@@ -38,7 +38,7 @@ export function getDecoderModel (options: DecoderModelOptions): tf.LayersModel {
   const decoderDenseOutputs = decoderDenseLayer.apply(decoderOutputs) as tf.SymbolicTensor
 
   const decoderModel = tf.model({
-    inputs: [decoderInputs, decoderStateInput],
+    inputs: [decoderInput, decoderStateInput],
     outputs: [decoderDenseOutputs, decoderStateOutput],
   })
 

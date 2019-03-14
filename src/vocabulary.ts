@@ -30,10 +30,12 @@ export class Vocabulary {
   }
 
   public fitText(text: string): void {
-    if (text.length > this.maxSeqLength) {
-      this.maxSeqLength = text.length
+    const tokenList = [...this.tokenizer.tokenize(text)]
+
+    if (tokenList.length > this.maxSeqLength) {
+      this.maxSeqLength = tokenList.length
     }
-    for (const token of this.tokenizer.tokenize(text)) {
+    for (const token of tokenList) {
       this.fitToken(token)
     }
   }

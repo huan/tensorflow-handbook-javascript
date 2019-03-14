@@ -74,13 +74,18 @@ async function main (args: Args) {
 
   console.log('Sample num:', size)
   console.log('Input vocabulary size:', inputVoc.size)
+  console.log('Input vocabulary maxSeqLength:', inputVoc.maxSeqLength)
   console.log('Input vocabulary:', [...inputVoc.tokenIndice].slice(0, 10))
   console.log('Output vocabulary size:', outputVoc.size)
+  console.log('Output vocabulary maxSeqLength:', outputVoc.maxSeqLength)
   console.log('Output vocabulary:', [...outputVoc.tokenIndice].slice(0, 10))
+
+  const optimizer = new tf.AdamOptimizer(1e-3, 0.9, 0.999, 1e-8)
+  // const optimizer = new tf.RMSPropOptimizer(1e-2)
 
   // Run training.
   seq2seqModel.compile({
-    optimizer: 'rmsprop',
+    optimizer: optimizer,
     // loss: 'categoricalCrossentropy',
     loss,
   })
@@ -126,8 +131,8 @@ async function main (args: Args) {
 
   return 0
 
-  async function onBatchEnd(/* batch: number, logs?: tf.Logs */): Promise<void> {
-    // console.log('batch ', batch, 'logs', logs)
+  async function onBatchEnd(batch: number, logs?: tf.Logs): Promise<void> {
+    console.log('batch ', batch, 'logs', logs)
     await showTestSentences()
     return
   }
