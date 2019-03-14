@@ -65,7 +65,7 @@ async function main (args: Args) {
   .batch(args.batch_size)
   .take(1)
   .forEachAsync((input: any) => {
-    console.log(input[0])
+    console.log(input)
     // console.log('seq2seq dataset sample:')
     // console.log('seq2seqInputs', input[0].seq2seqInputs.shape)
     // console.log('seq2seqDecoderInputs', input[0].seq2seqDecoderInputs.shape)

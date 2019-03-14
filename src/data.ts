@@ -59,7 +59,7 @@ async function getSeq2seqDataset (
     }
     const ys = decoderTarget
 
-    return [xs, ys] as [typeof xs, typeof ys]
+    return {xs, ys}
   })
 
   return seq2seqDataset
