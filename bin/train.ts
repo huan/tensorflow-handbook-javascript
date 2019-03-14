@@ -6,6 +6,11 @@
  * 2019, https://github.com/huan
  *
  */
+import fs from 'fs'
+
+import {
+  Tensor,
+}                     from '@tensorflow/tfjs'
 
 import { ArgumentParser } from 'argparse'
 
@@ -14,6 +19,21 @@ import {
   seq2seqDecoder,
   getDataset,
 }                   from '../'
+import { tf } from '../src/config';
+
+function loss (
+  yTrue: Tensor,
+  yPred: Tensor,
+): Tensor {
+  const meanLoss = tf.metrics.categoricalCrossentropy(yTrue, yPred).mean()
+
+  const mask = yTrue.sum(-1)
+  const placingRate = mask.sum().div(mask.size)
+
+  const lossPerToken = meanLoss.sum().div(placingRate)
+
+  return lossPerToken
+}
 
 interface Args {
   // TODO: define the specific args types
@@ -61,8 +81,8 @@ async function main (args: Args) {
   // Run training.
   seq2seqModel.compile({
     optimizer: 'rmsprop',
-    loss: 'categoricalCrossentropy',
-    // loss: 'sparseCategoricalCrossentropy',
+    // loss: 'categoricalCrossentropy',
+    loss,
   })
 
   await seq2seqDataset
@@ -93,8 +113,9 @@ async function main (args: Args) {
 
   // FIXME: Layer decoderLstm was passed non-serializable keyword arguments: [object Object].
   // FIXME: They will not be included in the serialized model (and thus will be missing at deserialization time).
-
-  // Huan: be aware that the Node need a `file://` prefix to local filename
+  if (!fs.existsSync(args.artifacts_dir))  {
+    fs.mkdirSync(args.artifacts_dir)
+  }
   await seq2seqModel.save('file://' + args.artifacts_dir)
   console.log('Model saved to ', args.artifacts_dir)
 

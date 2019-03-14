@@ -47,7 +47,7 @@ export async function seq2seqDecoder (
       decodedToken = outputVoc.token(decodedIndice)
     }
 
-    decodedSentence += decodedToken
+    decodedSentence += ' ' + decodedToken
 
     // save decoded data for next time step
     decoderInput = decodedIndice
