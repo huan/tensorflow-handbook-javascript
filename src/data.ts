@@ -31,7 +31,7 @@ export function getCsvDataset (
   csvDataset = csvDataset.map(value => {
     return {
       input: value.input,
-      output: START_TOKEN + value.output + END_TOKEN,
+      output: value.output,
     }
   })
 
@@ -96,7 +96,12 @@ function vectorizeForDecoder (
     voc.size,
   ])
 
-  const tokenList = [...voc.tokenizer.tokenize(text)]
+  const tokenList = [
+    START_TOKEN,
+    ...voc.tokenizer.tokenize(text),
+    END_TOKEN,
+  ]
+
   for (const [t, token] of tokenList.entries()) {
     const indice = voc.indice(token)
     inputBuf.set(indice, t)
@@ -122,12 +127,18 @@ async function vocableDataset(
   const inputVoc = new Vocabulary()
   const outputVoc = new Vocabulary()
 
+  // add START / STOP token
+  outputVoc.fitToken(START_TOKEN)
+  outputVoc.fitToken(END_TOKEN)
+
   let size = 0
   await dataset.forEachAsync(value => {
     inputVoc.fitText(value.input)
     outputVoc.fitText(value.output)
     size++
   })
+
+  outputVoc.maxSeqLength += 2
 
   return {
     inputVoc,

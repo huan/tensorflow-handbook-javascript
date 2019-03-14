@@ -53,6 +53,10 @@ async function main (args: Args) {
   seq2seqModel.summary()
 
   console.log('Sample num:', size)
+  console.log('Input vocabulary size:', inputVoc.size)
+  console.log('Input vocabulary:', [...inputVoc.tokenIndice].slice(0, 10))
+  console.log('Output vocabulary size:', outputVoc.size)
+  console.log('Output vocabulary:', [...outputVoc.tokenIndice].slice(0, 10))
 
   // Run training.
   seq2seqModel.compile({
@@ -82,6 +86,7 @@ async function main (args: Args) {
       {
         epochs: args.epochs,
         // validationSplit: 0.2,
+        // verbose: 1,
       },
     )
   }

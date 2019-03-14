@@ -19,18 +19,22 @@ export class Vocabulary {
     this.maxSeqLength = 0
   }
 
+  public fitToken(token: string): void {
+    if (!this.tokenIndice.has(token)) {
+
+      this.tokenIndice.set(token, this.size)
+      this.indiceToken.set(this.size, token)
+
+      this.size++
+    }
+  }
+
   public fitText(text: string): void {
     if (text.length > this.maxSeqLength) {
       this.maxSeqLength = text.length
     }
     for (const token of this.tokenizer.tokenize(text)) {
-      if (!this.tokenIndice.has(token)) {
-
-        this.tokenIndice.set(token, this.size)
-        this.indiceToken.set(this.size, token)
-
-        this.size++
-      }
+      this.fitToken(token)
     }
   }
 
