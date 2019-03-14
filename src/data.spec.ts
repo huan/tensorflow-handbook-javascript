@@ -22,7 +22,7 @@ test('getDataset()', async t => {
   console.log('dstVoc', JSON.stringify([...outputVoc.tokenIndice]))
   console.log('size', size)
 
-  await seq2seqDataset.forEachAsync(([xs, ys]) => {
+  await seq2seqDataset.forEachAsync(({xs, ys}) => {
     console.log('encoderInput')
     xs.seq2seqInputs.print()
     console.log('decoderInput')

@@ -193,7 +193,7 @@ function parseArguments () {
     '--num_test_sentences',
     {
       type: 'int',
-      defaultValue: 100,
+      defaultValue: 10,
       help: 'Number of example sentences to test at the end of the training.',
     },
   )

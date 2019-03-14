@@ -20,22 +20,30 @@ export async function seq2seqDecoder (
 
   // let state = encoderModel.predictOnBatch(inputSeq) as tf.Tensor<tf.Rank.R2>
 
-  let decoderInput = outputVoc.indice(START_TOKEN)
+  let tokenIndice = outputVoc.indice(START_TOKEN)
 
-  let decodedTensor: tf.Tensor<tf.Rank.R3>
+  let decoderOutputs: tf.Tensor<tf.Rank.R3>
   let decodedToken: string
-  let decodedSentence = ''
+  let decodedTokenList = []
 
   do {
-    [decodedTensor, state] = decoderModel.predict([
-      tf.tensor([decoderInput]),
+    const decoderInputs = tf.tensor(tokenIndice).reshape([1, 1]) as tf.Tensor<tf.Rank.R2>
+
+    // console.log('decoderInputTensor', decoderInputs.arraySync())
+    // console.log('decoderInputTensor', decoderInputs.shape)
+    // console.log('state', state.shape)
+
+    ;[decoderOutputs, state] = decoderModel.predict([
+      decoderInputs,
       state,
     ]) as [
       tf.Tensor<tf.Rank.R3>,
       tf.Tensor<tf.Rank.R2>,
     ]
 
-    let decodedIndice = await decodedTensor
+    // console.log('decoderOutputs', decoderOutputs.shape)
+
+    let decodedIndice = await decoderOutputs
                                 .squeeze()
                                 .argMax()
                                 .array() as number
@@ -47,14 +55,16 @@ export async function seq2seqDecoder (
       decodedToken = outputVoc.token(decodedIndice)
     }
 
-    decodedSentence += ' ' + decodedToken
+    if (decodedToken === END_TOKEN) {
+      break
+    } else {
+      decodedTokenList.push(decodedToken)
+    }
 
     // save decoded data for next time step
-    decoderInput = decodedIndice
-  } while (
-       decodedToken !== END_TOKEN
-    && decodedSentence.length < outputVoc.size
-  )
+    tokenIndice = decodedIndice
 
-  return decodedSentence
+  } while (decodedTokenList.length < outputVoc.maxSeqLength)
+
+  return decodedTokenList.join(' ')
 }
