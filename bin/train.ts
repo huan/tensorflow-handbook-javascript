@@ -107,6 +107,9 @@ async function main (args: Args) {
         epochs: args.epochs,
         // validationSplit: 0.2,
         // verbose: 1,
+        callbacks: {
+          onBatchEnd,
+        }
       },
     )
   }
@@ -119,29 +122,39 @@ async function main (args: Args) {
   await seq2seqModel.save('file://' + args.artifacts_dir)
   console.log('Model saved to ', args.artifacts_dir)
 
-  const csvList = await dataset.take(args.num_test_sentences).toArray()
-
-  for (const csvData of csvList) {
-    const input = csvData.input
-    const output = csvData.output
-
-    const decodedOutput = await seq2seqDecoder(
-      input,
-      encoderModel,
-      decoderModel,
-      inputVoc,
-      outputVoc,
-    )
-
-    console.log('-')
-    console.log('Input sentence:', input)
-    console.log('Target sentence:', output)
-    console.log('Decoded sentence:', decodedOutput)
-  }
+  await showTestSentences()
 
   return 0
-}
 
+  async function onBatchEnd(/* batch: number, logs?: tf.Logs */): Promise<void> {
+    // console.log('batch ', batch, 'logs', logs)
+    await showTestSentences()
+    return
+  }
+
+  async function showTestSentences() {
+    const testSentenceList = await dataset.take(args.num_test_sentences).toArray()
+
+    for (const testSentence of testSentenceList) {
+      const input = testSentence.input
+      const output = testSentence.output
+
+      const decodedOutput = await seq2seqDecoder(
+        input,
+        encoderModel,
+        decoderModel,
+        inputVoc,
+        outputVoc,
+      )
+
+      console.log('-')
+      console.log('Input sentence:', input)
+      console.log('Target sentence:', output)
+      console.log('Decoded sentence:', decodedOutput)
+    }
+  }
+
+}
 
 function parseArguments () {
   const parser = new ArgumentParser({
