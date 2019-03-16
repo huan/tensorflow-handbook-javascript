@@ -19,7 +19,7 @@ export function getDecoderModel (options: DecoderModelOptions): tf.LayersModel {
   } = options
 
   const decoderInput = tf.layers.input({
-    shape: [1],
+    shape: [null] as any as number[], // FIXME: see issue of tfjs Shape
     name: 'decoderInputs',
   })
   const decoderStateInput = tf.layers.input({
