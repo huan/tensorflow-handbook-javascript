@@ -5,14 +5,14 @@ import test  from 'blue-tape'
 
 import { Tokenizer } from './tokenizer'
 
-test('tokenize() without args', async t => {
+test('tokenize()', async t => {
   const tokenizer = new Tokenizer()
 
-  const TEXT = 'Hello, World!'
+  const TEXT = 'Hello , World !'
   const EXPECTED_TOKENS = ['Hello', ',', 'World', '!']
 
   const tokenList = [...tokenizer.tokenize(TEXT)]
-  t.deepEqual(tokenList, EXPECTED_TOKENS, 'should get the token by delimiter')
+  t.deepEqual(tokenList, EXPECTED_TOKENS, 'should get the token by default delimiter')
 })
 
 test('tokenizeByDelimiter()', async t => {
@@ -45,9 +45,51 @@ test('tokenizeByChar()', async t => {
     mode: 'char',
   })
 
-  const TEXT = 'Hello!'
-  const EXPECTED_TOKENS = ['H', 'e', 'l' ,'l', 'o', '!']
+  const TEXT = 'Hello, world!'
+  const EXPECTED_TOKENS = ['H', 'e', 'l' ,'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!']
 
   const tokenList = [...tokenizer.tokenize(TEXT)]
   t.deepEqual(tokenList, EXPECTED_TOKENS, 'should get the token by char')
+})
+
+test('toJSON()', async t => {
+  const tokenizer = new Tokenizer({
+    mode: 'delimiter',
+    delimiter: /abc/,
+  })
+
+  const jsonText = JSON.stringify(tokenizer)
+  const EXPECTED_JSON_TEXT = '{"mode":"delimiter","delimiter":"abc"}'
+
+  t.equal(jsonText, EXPECTED_JSON_TEXT, 'should stringify to json')
+})
+
+test('fromJSON()', async t => {
+  const JSON_TEXT = '{"mode":"delimiter","delimiter":"abc"}'
+  const tokenizer = Tokenizer.fromJSON(JSON_TEXT)
+
+  const EXPECTED_MODE = 'delimiter'
+  const EXPECTED_DELIMITER = /abc/
+
+  t.equal(tokenizer.mode, EXPECTED_MODE, 'should be parsed to right mode')
+  t.ok(tokenizer.delimiter instanceof RegExp, 'should get a parsed delimiter as RegExp')
+  t.equal(tokenizer.delimiter!.toString(), EXPECTED_DELIMITER.toString(), 'should be parsed to right delimiter')
+})
+
+test('toJSON() then fromJSON()', async t => {
+  const tokenizer = new Tokenizer({
+    mode: 'delimiter',
+    delimiter: /abc/,
+  })
+
+  const jsonText = JSON.stringify(tokenizer)
+
+  const newTokenizer = Tokenizer.fromJSON(JSON.parse(jsonText))
+
+  const EXPECTED_MODE = 'delimiter'
+  const EXPECTED_DELIMITER = /abc/
+
+  t.equal(newTokenizer.mode, EXPECTED_MODE, 'should be parsed to right mode')
+  t.ok(newTokenizer.delimiter instanceof RegExp, 'should get a parsed delimiter as RegExp')
+  t.equal(newTokenizer.delimiter!.toString(), EXPECTED_DELIMITER.toString(), 'should be parsed to right delimiter')
 })

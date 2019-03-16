@@ -1,14 +1,20 @@
-
 type TokenizeMode = 'char' | 'delimiter'
 
 interface TokenizerOptions {
   mode: TokenizeMode,
-  delimiter?: string | RegExp,
+  delimiter?: RegExp,
+}
+
+const DEFAULT_DELIMITER_REGEXP = /\s+/
+
+interface TokenizerJson {
+  mode: string,
+  delimiter?: string
 }
 
 export class Tokenizer {
-  private readonly mode: TokenizeMode
-  private readonly delimiter?: string | RegExp
+  public readonly mode: TokenizeMode
+  public readonly delimiter?: RegExp
 
   constructor (options?: TokenizerOptions) {
     const {
@@ -17,7 +23,7 @@ export class Tokenizer {
     } = {
       mode: 'delimiter',
       // very tricky for setting RegExp for delimiter, remember do add unit test when modify this.
-      delimiter: /\s|\b/,
+      delimiter: DEFAULT_DELIMITER_REGEXP,
       ...options
     } as TokenizerOptions
 
@@ -65,5 +71,41 @@ export class Tokenizer {
         yield token
       }
     }
+  }
+
+  public toJSON (): TokenizerJson {
+    const tokenizerJson: TokenizerJson = {
+      mode: this.mode,
+    }
+
+    if (this.delimiter) {
+      const delimiter = this.delimiter
+                            .toString()
+                            // get rid of the start '/' and the end '/'
+                            .slice(1, -1)
+      tokenizerJson.delimiter = delimiter
+    }
+
+    return tokenizerJson
+  }
+
+  public static fromJSON (json: string | object): Tokenizer {
+    let jsonObj: TokenizerJson
+
+    if (json instanceof Object) {
+      jsonObj = json as TokenizerJson
+    } else {
+      jsonObj = JSON.parse(json)
+    }
+
+    const options: TokenizerOptions = {
+      mode: jsonObj.mode as TokenizeMode,
+    }
+
+    if (jsonObj.delimiter) {
+      options.delimiter = new RegExp(jsonObj.delimiter)
+    }
+
+    return new Tokenizer(options)
   }
 }

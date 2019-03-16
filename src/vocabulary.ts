@@ -1,13 +1,20 @@
 import { Tokenizer } from './tokenizer'
 
+interface VocabularyJson {
+  tokenIndice: string,
+  maxSeqLength: number,
+  size: number,
+  tokenizer: string,
+}
+
 export class Vocabulary {
-  public readonly tokenIndice: Map<string, number>
-  public readonly indiceToken: Map<number, string>
-
-  public maxSeqLength: number
   public size: number
+  public maxSeqLength: number
 
-  public readonly tokenizer: Tokenizer
+  public tokenizer: Tokenizer
+
+  public tokenIndice: Map<string, number>
+  public indiceToken: Map<number, string>
 
   constructor () {
     this.tokenizer = new Tokenizer()
@@ -40,9 +47,27 @@ export class Vocabulary {
     }
   }
 
-  public sequenize (text: string): number[] {
+  /**
+   * Get the sequence of the text
+   * @param text  input text string
+   * @param length
+   *  0 means the actual text length(after tokenize)
+   *  -1 means padding 0 to the maxSeqLength
+   */
+  public sequenize (
+    text: string,
+    length = 0,
+  ): number[] {
     const tokenList = [...this.tokenizer.tokenize(text)]
     const indiceList = tokenList.map(token => this.indice(token))
+
+    if (length === -1) {
+      indiceList.length = this.maxSeqLength
+      if (this.maxSeqLength > tokenList.length) {
+        indiceList.fill(0, tokenList.length)
+      }
+    }
+
     return indiceList
   }
 
@@ -60,23 +85,39 @@ export class Vocabulary {
     throw new Error(`indice not found for token: "${token}"`)
   }
 
-  public toJSON (): string {
-    const tokenIndice = this.tokenIndice
-    const maxSeqLength = this.maxSeqLength
-
-    const tokenizer = this.tokenizer
-
-    const metadata = {
-      tokenIndice,
-      maxSeqLength,
-      tokenizer,
+  public toJSON (): VocabularyJson {
+    const vocabularyJson: VocabularyJson = {
+      tokenIndice: JSON.stringify([...this.tokenIndice]),
+      maxSeqLength: this.maxSeqLength,
+      size: this.size,
+      tokenizer: JSON.stringify(this.tokenizer),
     }
 
-    return JSON.stringify(metadata)
+    return vocabularyJson
   }
 
-  public static fromJSON (text: string) {
-    console.log('TODO', text.length)
-    // TODO: deserilization
+  public static fromJSON (json: string | object): Vocabulary {
+    let vocabularyJson: VocabularyJson
+
+    if (json instanceof Object) {
+      vocabularyJson = json as VocabularyJson
+    } else {
+      vocabularyJson = JSON.parse(json)
+    }
+
+    const voc = new Vocabulary()
+
+    voc.size = vocabularyJson.size
+    voc.maxSeqLength = vocabularyJson.maxSeqLength
+    voc.tokenizer = Tokenizer.fromJSON(vocabularyJson.tokenizer)
+
+    // TODO: fix the map parse
+    const tokenIndiceTuple = JSON.parse(vocabularyJson.tokenIndice) as [string, number][]
+    voc.tokenIndice = new Map([...tokenIndiceTuple])
+
+    const indiceTokenTuple = tokenIndiceTuple.map(([token, indice]) => [indice, token]) as [number, string][]
+    voc.indiceToken = new Map([...indiceTokenTuple])
+
+    return voc
   }
 }
