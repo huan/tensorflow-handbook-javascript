@@ -4,7 +4,6 @@
 
 这里的Encoder-Decoder结构，简单的来说就是算法包含两部分，一个负责对输入的信息进行Encoding，将输入转换为向量形式；然后由Decoder对这个向量进行解码，还原为输出序列。
 
-
 这个任务预测的是通过一个序列，来预测另外一个对应的序列。举例来说，常见的打招呼就是一个序列到序列的过程：
 
 ```text
@@ -102,12 +101,12 @@ class Vocabulary {
 
   public sequenize (
     text: string,
-    fixLength = false,
+    length = 0,
   ): number[] {
-    const tokenList = [...this.tokenizer.tokenize(text)]
+    const tokenList = [...text.split(/\s+/)]
     const indiceList = tokenList.map(token => this.indice(token))
 
-    if (fixLength) {
+    if (length === -1) {
       indiceList.length = this.maxSeqLength
       if (this.maxSeqLength > tokenList.length) {
         indiceList.fill(0, tokenList.length)
@@ -140,7 +139,7 @@ voc.maxSeqLength += 2
 
 const seq2seqDataset = dataset
 .map(value => {
-  const input = tf.tensor(voc.sequenize(value.input, true))
+  const input = tf.tensor(voc.sequenize(value.input, -1))
 
   const decoderInputBuf = tf.buffer<tf.Rank.R1>([
     voc.maxSeqLength,
