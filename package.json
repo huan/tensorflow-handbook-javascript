@@ -8,6 +8,7 @@
     "clean": "shx rm -fr dist/",
     "docker": "scripts/docker.sh",
     "train": "node -r ts-node/register bin/train.ts",
+    "chat": "node -r ts-node/register bin/chat.ts",
     "download": "scripts/download.sh",
     "test:unit": "blue-tape -r ts-node/register \"src/**/*.spec.ts\" \"src/*.spec.ts\" \"tests/*.spec.ts\" \"tests/**/*.spec.ts\"",
     "test": "npm run test:unit"

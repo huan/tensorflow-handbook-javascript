@@ -71,6 +71,7 @@ export class Vocabulary {
     return indiceList
   }
 
+  // TODO: OOV support
   public token(indice: number): string {
     if (this.indiceToken.has(indice)) {
       return this.indiceToken.get(indice) as string
@@ -78,6 +79,7 @@ export class Vocabulary {
     throw new Error(`token not found for indice: ${indice}`)
   }
 
+  // TODO: OOV support
   public indice (token: string): number {
     if (this.tokenIndice.has(token)) {
       return this.tokenIndice.get(token) as number

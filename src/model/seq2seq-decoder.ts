@@ -4,7 +4,6 @@ import {
   END_TOKEN,
 }                     from '../config'
 import { Vocabulary } from '../vocabulary'
-import { vectorizeInput } from '../data'
 
 export async function seq2seqDecoder (
   input: string,
@@ -13,12 +12,11 @@ export async function seq2seqDecoder (
   inputVoc: Vocabulary,
   outputVoc: Vocabulary,
 ): Promise<string> {
-  const inputSeq = vectorizeInput(input, inputVoc)
+  const inputSeq = inputVoc.sequenize(input)
+  const inputTensor = tf.tensor(inputSeq)
 
-  const batchedInputSeq = inputSeq.expandDims(0)
-  let state = encoderModel.predict(batchedInputSeq) as tf.Tensor<tf.Rank.R2>
-
-  // let state = encoderModel.predictOnBatch(inputSeq) as tf.Tensor<tf.Rank.R2>
+  const batchedInput = inputTensor.expandDims(0)
+  let state = encoderModel.predict(batchedInput) as tf.Tensor<tf.Rank.R2>
 
   let tokenIndice = outputVoc.indice(START_TOKEN)
 

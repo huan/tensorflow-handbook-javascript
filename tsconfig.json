@@ -17,7 +17,8 @@
     , "experimentalDecorators" : true
 
     , "lib": [
-      "esnext"
+      "esnext",
+      "dom"
     ]
 
     , "strict"                     : true

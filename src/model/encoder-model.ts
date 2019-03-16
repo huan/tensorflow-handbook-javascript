@@ -1,11 +1,8 @@
 import { tf } from '../config'
 
-import { Vocabulary } from '../vocabulary'
-
 interface EncoderModelOptions {
   encoderEmbeddingLayer: tf.layers.Layer,
   encoderRnnLayer: tf.layers.Layer,
-  inputVoc: Vocabulary,
 }
 
 /**
@@ -15,11 +12,10 @@ export function getEncoderModel (options: EncoderModelOptions): tf.LayersModel {
   const {
     encoderEmbeddingLayer,
     encoderRnnLayer,
-    inputVoc,
   } = options
 
   const encoderInputs = tf.layers.input({
-    shape: [inputVoc.maxSeqLength],
+    shape: [null] as any as number[],
     name: 'encoderInputs',
   })
   const encoderEmbedding = encoderEmbeddingLayer.apply(encoderInputs)

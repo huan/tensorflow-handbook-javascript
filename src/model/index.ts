@@ -36,7 +36,6 @@ export function createModel (
   const encoderModel = getEncoderModel({
     encoderEmbeddingLayer,
     encoderRnnLayer,
-    inputVoc,
   })
 
   const decoderModel = getDecoderModel({

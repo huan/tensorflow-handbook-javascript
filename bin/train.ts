@@ -20,6 +20,7 @@ import {
   getDataset,
 }                   from '../'
 import { tf } from '../src/config';
+import { Loader } from '../src/loader';
 
 function loss (
   yTrue: Tensor,
@@ -113,7 +114,7 @@ async function main (args: Args) {
         // validationSplit: 0.2,
         // verbose: 1,
         callbacks: {
-          onBatchEnd,
+          onEpochEnd,
         }
       },
     )
@@ -124,15 +125,23 @@ async function main (args: Args) {
   if (!fs.existsSync(args.artifacts_dir))  {
     fs.mkdirSync(args.artifacts_dir)
   }
-  await seq2seqModel.save('file://' + args.artifacts_dir)
+
+  await Loader.save({
+    encoder: encoderModel,
+    decoder: decoderModel,
+    model: seq2seqModel,
+    inputVoc,
+    outputVoc,
+  }, args.artifacts_dir)
+
   console.log('Model saved to ', args.artifacts_dir)
 
   await showTestSentences()
 
   return 0
 
-  async function onBatchEnd(batch: number, logs?: tf.Logs): Promise<void> {
-    console.log('batch ', batch, 'logs', logs)
+  async function onEpochEnd(epoch: number, logs?: tf.Logs): Promise<void> {
+    console.log('epoch ', epoch, 'logs', logs)
     await showTestSentences()
     return
   }
@@ -219,7 +228,7 @@ function parseArguments () {
     '--artifacts_dir',
     {
       type: 'string',
-      defaultValue: '/tmp/translation.keras',
+      defaultValue: '/tmp/chitchat',
       help: 'Local path for saving the TensorFlow.js artifacts.',
     },
   )
