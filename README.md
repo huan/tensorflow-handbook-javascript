@@ -2,8 +2,8 @@
 
 Concise ChitChat in JavaScript/TypeScript
 
-This repository is a Chapter for [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
-Book Chapter: Concise Chit Chat - <https://huan.github.io/javascript-concise-chitchat/>
+* This repository is a Chapter for [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
+* Book Chapter: Concise Chit Chat - <https://huan.github.io/javascript-concise-chitchat/>
 
 ## TODO
 
