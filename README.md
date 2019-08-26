@@ -1,8 +1,8 @@
-# JAVASCRIPT CONCISE CHITCHAT
+# Tensorflow in JavaScript
 
 ![Javascript for Tensorflow](docs/images/tensorflow-js.gif)
 
-Concise ChitChat in JavaScript/TypeScript
+Tensorflow Handbook for JavaScript/TypeScript
 
 * This repository is a Chapter for [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
 * Book Chapter: Concise Chit Chat - <https://huan.github.io/tensorflow-handbook-javascript/>
