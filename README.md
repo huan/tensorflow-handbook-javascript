@@ -4,8 +4,8 @@
 
 Tensorflow Handbook for JavaScript/TypeScript
 
-* This repository is a Chapter for [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
-* Book Chapter: Concise Chit Chat - <https://huan.github.io/tensorflow-handbook-javascript/>
+* This repository is the [JavaScript Chapter](https://tf.wiki/zh/deployment/javascript.html) for [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
+* Read from this repository: <https://huan.github.io/tensorflow-handbook-javascript/>
 
 ## TODO
 
