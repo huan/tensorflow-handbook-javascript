@@ -20,9 +20,9 @@ TensorFlow Handbook for JavaScript/TypeScript
 
 ## My Slide
 
-[Machine Learning in JavaScript](https://docs.google.com/presentation/d/10u2hKAz4VjryCYr-oHxcxX4HzFeKOir7lq79ASV6TIA/edit?usp=sharing)
+[![Machine Learning in JavaScript](docs/images/machine-learning-in-javascript.png)](https://docs.google.com/presentation/d/10u2hKAz4VjryCYr-oHxcxX4HzFeKOir7lq79ASV6TIA/edit?usp=sharing)
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTUzNOjNR17yUobueoqQmFIELue0vOLnHTCwncFtpl5TtDC00u97ppl1ekJbNNUiZ7NRW0B6cUwdV_X/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1536" height="893" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+> Google Slide: <https://docs.google.com/presentation/d/10u2hKAz4VjryCYr-oHxcxX4HzFeKOir7lq79ASV6TIA/edit?usp=sharing>
 
 ## Author
 
