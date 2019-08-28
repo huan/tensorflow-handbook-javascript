@@ -18,7 +18,13 @@ TensorFlow Handbook for JavaScript/TypeScript
 
 - [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
 
-## AUTHOR
+## My Slide
+
+[Machine Learning in JavaScript](https://docs.google.com/presentation/d/10u2hKAz4VjryCYr-oHxcxX4HzFeKOir7lq79ASV6TIA/edit?usp=sharing)
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTUzNOjNR17yUobueoqQmFIELue0vOLnHTCwncFtpl5TtDC00u97ppl1ekJbNNUiZ7NRW0B6cUwdV_X/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1536" height="893" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+## Author
 
 [@huan](https://github.com/huan) [Huan (李卓桓)](https://linkedin.com/in/zixia) \<zixia@zixia.net\>
 
@@ -26,7 +32,7 @@ TensorFlow Handbook for JavaScript/TypeScript
   <img src="http://stackoverflow.com/users/flair/1123955.png" width="208" height="58" alt="profile for zixia at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for zixia at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
 </a>
 
-## COPYRIGHT & LICENSE
+## Copyright & License
 
 - Code & Docs © 2018 - now Huan (李卓桓) \<zixia@zixia.net\>
 - Code released under the Apache-2.0 License
