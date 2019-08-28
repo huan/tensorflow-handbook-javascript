@@ -3,9 +3,8 @@
 一般TensorFlow的模型，以Python版本为例，会被存储为以下四种格式之一：
 
 1. TensorFlow SavedModel
-2. Frozen Model
-3. TensorFlow Hub Module
-4. Keras Module
+1. TensorFlow Hub Module
+1. Keras Module
 
 Google 目前最佳实践中，推荐使用 SavedModel 方法进行模型保存。同时所有以上格式，都可以通过 tensorflowjs-converter 转换器，将其转换为可以直接被 TensorFlow.js 加载的格式，在JavaScript语言中进行使用。
 
@@ -37,18 +36,6 @@ tensorflowjs_converter \
     --output_node_names='MobilenetV1/Predictions/Reshape_1' \
     --saved_model_tags=serve \
     /mobilenet/saved_model \
-    /mobilenet/tfjs_model
-```
-
-### FrozenModel例子
-
-将`/mobilenet/frozen_model.pb`转换到`/mobilenet/tfjs_model`：
-
-```shell
-tensorflowjs_converter \
-    --input_format=tf_frozen_model \
-    --output_node_names='MobilenetV1/Predictions/Reshape_1' \
-    /mobilenet/frozen_model.pb \
     /mobilenet/tfjs_model
 ```
 
