@@ -32,7 +32,7 @@ no .	you might wanna think about it
 you the new guy ?	so they tell me ...
 ```
 
-我们需要将它转换为 Tensorflow Dataset 格式：
+我们需要将它转换为 TensorFlow Dataset 格式：
 
 ```ts
 import * as tf from '@tensorflow/tfjs'

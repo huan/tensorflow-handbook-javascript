@@ -1,6 +1,6 @@
-## 使用 Tensorflow.js 模型库
+## 使用 TensorFlow.js 模型库
 
-Tensorflow.js 提供了一系列预训练好的模型，方便大家快速的给自己的程序引入人工智能能力。
+TensorFlow.js 提供了一系列预训练好的模型，方便大家快速的给自己的程序引入人工智能能力。
 
 模型库 GitHub 地址：<https://github.com/tensorflow/tfjs-models>，其中模型分类包括：
 
