@@ -1,9 +1,11 @@
-# JAVASCRIPT CONCISE CHITCHAT
+# TensorFlow in JavaScript
 
-Concise ChitChat in JavaScript/TypeScript
+![Javascript for TensorFlow](docs/images/tensorflow-js.gif)
 
-* This repository is a Chapter for [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
-* Book Chapter: Concise Chit Chat - <https://huan.github.io/javascript-concise-chitchat/>
+TensorFlow Handbook for JavaScript/TypeScript
+
+* This repository is the [JavaScript Chapter](https://tf.wiki/zh/deployment/javascript.html) for [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
+* Read from this repository: <https://huan.github.io/tensorflow-handbook-javascript/>
 
 ## TODO
 
@@ -16,16 +18,22 @@ Concise ChitChat in JavaScript/TypeScript
 
 - [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
 
-## AUTHOR
+## My Slide
 
-[@huan](https://github.com/huan) [Huan LI](https://linkedin.com/in/zixia) \<zixia@zixia.net\>
+[![Machine Learning in JavaScript](docs/images/machine-learning-in-javascript.png)](https://docs.google.com/presentation/d/10u2hKAz4VjryCYr-oHxcxX4HzFeKOir7lq79ASV6TIA/edit?usp=sharing)
+
+> Google Slide: <https://docs.google.com/presentation/d/10u2hKAz4VjryCYr-oHxcxX4HzFeKOir7lq79ASV6TIA/edit?usp=sharing>
+
+## Author
+
+[@huan](https://github.com/huan) [Huan (李卓桓)](https://linkedin.com/in/zixia) \<zixia@zixia.net\>
 
 <a href="http://stackoverflow.com/users/1123955/zixia">
   <img src="http://stackoverflow.com/users/flair/1123955.png" width="208" height="58" alt="profile for zixia at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for zixia at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
 </a>
 
-## COPYRIGHT & LICENSE
+## Copyright & License
 
-- Code & Docs © 2018 - now Huan LI \<zixia@zixia.net\>
+- Code & Docs © 2018 - now Huan (李卓桓) \<zixia@zixia.net\>
 - Code released under the Apache-2.0 License
 - Docs released under Creative Commons

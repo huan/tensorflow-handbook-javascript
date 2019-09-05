@@ -32,7 +32,7 @@ no .	you might wanna think about it
 you the new guy ?	so they tell me ...
 ```
 
-我们需要将它转换为 Tensorflow Dataset 格式：
+我们需要将它转换为 TensorFlow Dataset 格式：
 
 ```ts
 import * as tf from '@tensorflow/tfjs'
@@ -421,4 +421,4 @@ Decoded setence: "good ."
 
 ## 小节
 
-本书中的 JavaScript 版 ChitChat 完整代码，使用说明，和训练好的模型文件及参数，都可以在作者的 GitHub 上找到。地址： https://github.com/huan/javascript-concise-chitchat
+本书中的 JavaScript 版 ChitChat 完整代码，使用说明，和训练好的模型文件及参数，都可以在作者的 GitHub 上找到。地址：<https://github.com/huan/tensorflow-handbook-javascript>
