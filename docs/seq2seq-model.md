@@ -1,5 +1,5 @@
 ## JavaScript 版闲聊对话模型
- 
+
 本章我们将基于前面 Python 版闲聊对话模型，实现一个基于 JavaScript 版的序列到序列模型（Sequence to Sequence, Seq2Seq）。它同样是基于 RNN 的 Encoder-Decoder 结构，具体基本介绍，请读者参考 Python 版闲聊对话模型的相关章节。
 
 这里的Encoder-Decoder结构，简单的来说就是算法包含两部分，一个负责对输入的信息进行Encoding，将输入转换为向量形式；然后由Decoder对这个向量进行解码，还原为输出序列。
