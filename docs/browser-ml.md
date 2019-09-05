@@ -1,4 +1,3 @@
-
 ## 在浏览器中运行TensorFlow
 
 ![Chrome Machine Learning](images/chrome-ml.png)
@@ -18,7 +17,3 @@ TensorFlow.js可以让我们直接在浏览器中加载TensorFlow，让用户立
 
 - Move Mirror 地址：<https://experiments.withgoogle.com/move-mirror>
 - Move Mirror 所使用的 PoseNet 地址：<https://github.com/tensorflow/tfjs-models/tree/master/posenet>
-
-### 一个浏览器中的例子
-
-线性回归的浏览器代码
