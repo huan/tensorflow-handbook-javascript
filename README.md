@@ -4,8 +4,8 @@
 
 TensorFlow Handbook for JavaScript/TypeScript
 
-* This repository is the [JavaScript Chapter](https://tf.wiki/zh/deployment/javascript.html) for [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
-* Read from this repository: <https://huan.github.io/tensorflow-handbook-javascript/>
+- This repository is the [JavaScript Chapter](https://tf.wiki/zh/deployment/javascript.html) for [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
+- Read from this repository: <https://huan.github.io/tensorflow-handbook-javascript/>
 
 ## TODO
 
@@ -13,6 +13,33 @@ TensorFlow Handbook for JavaScript/TypeScript
 - [ ] finish chat script
 - [ ] good default super parameters
 - [ ] InputLayer to use a shape as `[null]` for dynamic size
+
+## Usage
+
+TL;DR:
+
+```shell
+npm install
+npm start
+```
+
+### 1 Install
+
+```shell
+npm install
+```
+
+### 2 Train
+
+```shell
+npm run train -- --batch_size 32 --epochs 3 --latent_dim 64 --num_samples 10000 dist/
+```
+
+### 3 Chat
+
+```shell
+npm run chat
+```
 
 ## TURORIAL
 

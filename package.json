@@ -7,9 +7,11 @@
     "build": "tsc",
     "clean": "shx rm -fr dist/",
     "docker": "scripts/docker.sh",
+    "start": "npm run train -- --batch_size 32 --epochs 3 --latent_dim 64 --num_samples 10000 dist/ && npm run chat",
     "train": "node -r ts-node/register bin/train.ts",
     "chat": "node -r ts-node/register bin/chat.ts",
     "download": "scripts/download.sh",
+    "postinstall": "npm run download",
     "test:unit": "blue-tape -r ts-node/register \"src/**/*.spec.ts\" \"src/*.spec.ts\" \"tests/*.spec.ts\" \"tests/**/*.spec.ts\"",
     "test": "npm run test:unit"
   },
@@ -30,7 +32,6 @@
   "homepage": "https://github.com/huan/javascript-concist-chit-chat#readme",
   "devDependencies": {
     "@tensorflow/tfjs-node": "^1.0.1",
-    "@tensorflow/tfjs-node-gpu": "^1.0.1",
     "@types/argparse": "^1.0.36",
     "@types/blue-tape": "^0.1.32",
     "argparse": "^1.0.10",
