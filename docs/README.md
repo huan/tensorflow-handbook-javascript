@@ -31,8 +31,8 @@ TensorFlow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA �
 1. [将 Python 模型转换为 TensorFlow.js 可以加载的版本](converter-js.md)
 1. [TensorFlow.js 性能对比](performance.md)
 1. Web Demo
-    1. Regression: <regression.html>
-    1. MobileNet: <mobilenet.html>
+    1. [Regression](regression.html)
+    1. [MobileNet](mobilenet.html)
 
 ## 本章 GitHub 代码仓库
 
