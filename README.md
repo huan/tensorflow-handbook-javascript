@@ -41,9 +41,14 @@ npm run train -- --batch_size 32 --epochs 3 --latent_dim 64 --num_samples 10000 
 npm run chat
 ```
 
+### 4 MobileNet Demo
+
+<https://huan.github.io/tensorflow-handbook-javascript/mobilenet.html>
+
 ## TURORIAL
 
 - [简单粗暴TensorFlow | A Concise Handbook of TensorFlow](https://tf.wiki)
+- [Machine Learning For Front-End Developers With Tensorflow.js](https://www.smashingmagazine.com/2019/09/machine-learning-front-end-developers-tensorflowjs/)
 
 ## My Slide
 
@@ -53,14 +58,12 @@ npm run chat
 
 ## Author
 
-[Huan (李卓桓)](https://linkedin.com/in/zixia) \<zixia@zixia.net\>
+[Huan](https://github.com/huan) [(李卓桓)](http://linkedin.com/in/zixia) <zixia@zixia.net>
 
-<a href="http://stackoverflow.com/users/1123955/zixia">
-  <img src="http://stackoverflow.com/users/flair/1123955.png" width="208" height="58" alt="profile for zixia at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for zixia at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
-</a>
+[![Profile of Huan LI (李卓桓) on StackOverflow](https://stackoverflow.com/users/flair/1123955.png)](https://stackoverflow.com/users/1123955/huan)
 
 ## Copyright & License
 
-- Code & Docs © 2018-now Huan (李卓桓) \<zixia@zixia.net\>
+- Code & Docs © 2019-now Huan LI (李卓桓) <zixia@zixia.net>
 - Code released under the Apache-2.0 License
 - Docs released under Creative Commons
