@@ -41,9 +41,10 @@ npm run train -- --batch_size 32 --epochs 3 --latent_dim 64 --num_samples 10000 
 npm run chat
 ```
 
-### 4 MobileNet Demo
+### 4 Web Demo
 
-<https://huan.github.io/tensorflow-handbook-javascript/mobilenet.html>
+1. Regression: <https://huan.github.io/tensorflow-handbook-javascript/regression.html>
+1. MobileNet: <https://huan.github.io/tensorflow-handbook-javascript/mobilenet.html>
 
 ## TURORIAL
 
