@@ -59,7 +59,7 @@ npm run chat
 
 ## My Contribution
 
-- [Add native JavaScript(TypeScript) to replace translation.py #243](https://github.com/tensorflow/tfjs-examples/pull/243)
+- [TensorFlow.js Example: Sequence-to-Sequence English-French Translation](https://github.com/tensorflow/tfjs-examples/blob/master/translation/translation.ts) - [Add native JavaScript(TypeScript) to replace translation.py #243](https://github.com/tensorflow/tfjs-examples/pull/243)
 
 ## Author
 
