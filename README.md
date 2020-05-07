@@ -57,6 +57,10 @@ npm run chat
 
 > Google Slide: <https://docs.google.com/presentation/d/10u2hKAz4VjryCYr-oHxcxX4HzFeKOir7lq79ASV6TIA/edit?usp=sharing>
 
+## My Contribution
+
+- [Add native JavaScript(TypeScript) to replace translation.py #243](https://github.com/tensorflow/tfjs-examples/pull/243)
+
 ## Author
 
 [Huan](https://github.com/huan) [(李卓桓)](http://linkedin.com/in/zixia) <zixia@zixia.net>
